@@ -83,6 +83,21 @@
         font-size: 14px;
         color: #999;
       }
+
+      .message {
+        margin-top: 28px;
+        font-size: 20px;
+        color: #ff4d88;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .message.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
   </head>
   <body>
@@ -96,11 +111,13 @@
       </div>
 
       <div class="note">*No is not an option 😈*</div>
+      <div class="message" id="message" aria-live="polite"></div>
     </div>
 
     <script>
       const noBtn = document.getElementById("noBtn");
       const yesBtn = document.getElementById("yesBtn");
+      const message = document.getElementById("message");
 
       let escaped = false;
       let initialRect = null;
@@ -153,6 +170,11 @@
 
       // YES = HEART ATTACK
       yesBtn.addEventListener("click", () => {
+        const nameInput = window.prompt("What's your name?")?.trim();
+        const name = nameInput || "Valentine";
+        message.textContent = `Yay, ${name}! You just made my day 💞`;
+        message.classList.add("is-visible");
+
         const end = Date.now() + 1500;
 
         (function frame() {
